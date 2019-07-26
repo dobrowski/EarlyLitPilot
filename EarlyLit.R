@@ -3,6 +3,7 @@
 
 library(tidyverse)
 library(ggthemes)
+library(here)
 
 
 cols <- c("Timestamp", "FormalAssessment", "Difference", "Role", "Assessment", "Grouping", "Tailor", "OftenGroup", "OftenAssess", "DescribeGroup", "Changed", "Expand", "test" )
@@ -47,13 +48,18 @@ ggplot(Student) +
     scale_fill_manual(values=c( "#E69F00", "#999999")) +
     guides(fill = guide_legend(reverse = TRUE)) +
     geom_vline( aes(xintercept = 15)) +
-    labs(title = "Students Showed Growth on the Fountas-Pinnell",
+    geom_vline( aes(xintercept = 10)) +
+    geom_vline( aes(xintercept = 11)) +
+    annotate("text", x = 15.5, y = 25, angle = 90, label = "El Gabilan") + 
+    annotate("text", x = 10.5, y = 25, angle = 90, label = "Frank Ledesma") + 
+    annotate("text", x = 11.5, y = 25, angle = 90, label = "Olson") + 
+        labs(title = "Students Showed Growth on the Fountas-Pinnell",
          x = "",
          y = "Number of Students",
          fill = "") +
     theme_hc()
 
-ggsave("student.png")
+ggsave(here("figs" ,"student.png"))
 
 ggplot(Student.change) +
     geom_histogram(stat="count", aes(change, fill = "#E69F00"), position = position_dodge2(preserve = "single", reverse = TRUE)) +
@@ -66,7 +72,7 @@ ggplot(Student.change) +
          fill = "") +
     theme_hc()
 
-ggsave("studentchange.png")
+ggsave(here("figs" ,"studentchange.png"))
 
 
 
@@ -97,7 +103,7 @@ teacher.plot <- function(var,tit){
              fill = "") +
         theme_hc()
     
-ggsave(paste0(var,".png"))     
+ggsave(here("figs" ,paste0(var,".png")) )    
 }
 
 teacher.plot("FormalAssessment", "Teachers better understand the role formal \nassessments play in instructional decision making.")
